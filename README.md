@@ -1,8 +1,7 @@
-Inline-style: 
-![alt text](imagens/telainicial.PNG "Tela inicial.")
-![alt text](imagens/tela2.PNG "Tela inicial com filtros ativos")
-![alt text](imagens/tela3.PNG "PopUP de aviso (em desenvolvimento)")
-![alt text](imagens/telamobile1.PNG "Tela inicial versão mobile.")
+![logo]:imagens/telainicial.PNG "Tela inicial."
+![logo](imagens/tela2.PNG "Tela inicial com filtros ativos")
+![logo](imagens/tela3.PNG "PopUP de aviso (em desenvolvimento)")
+![logo](imagens/telamobile1.PNG "Tela inicial versão mobile.")
 # CadastroPublicacoes
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
