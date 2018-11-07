@@ -1,8 +1,10 @@
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+
 [logo]:imagens/telainicial.PNG "Tela inicial."
 ![logo](imagens/tela2.PNG "Tela inicial com filtros ativos")
 ![logo](imagens/tela3.PNG "PopUP de aviso (em desenvolvimento)")
 ![logo](imagens/telamobile1.PNG "Tela inicial versão mobile.")
+
 # CadastroPublicacoes
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
