@@ -1,0 +1,75 @@
+<div *blockUI="'loadingModal'">
+  <ui-modal modalTitle="Histórico da Consulta Nº {{consulta.numero}}">
+    <div class="body">
+      <div class="alert alert-danger" role="alert" *ngIf="consulta.revogadaPor > 0">
+        Revogada pela Consulta Nº <span class="badge badge-danger">{{consulta.revogadaPor}}</span>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Número da Consulta</label>
+            <input type="text" class="form-control" [value]="consulta.numero" readonly />
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Data da Publicação</label>
+            <input type="text" class="form-control" value="{{consulta.publicacao | date:'dd/MM/yyyy'}}" readonly />
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label>Número do Processo</label><br/>
+            <a href="http://consulta.tce.rj.gov.br/consulta-processo/Processo/List?numeroProcesso={{consulta.numeroDoProcessoConsulta}}" target="_blank">{{consulta.numeroDoProcessoFormatado}} <i class="fa fa-external-link"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label>Relator</label>
+            <input type="text" class="form-control" [value]="consulta.relator" readonly />
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label>Jurisdicionado</label>
+            <input type="text" class="form-control" [value]="consulta.jurisdicionado" readonly />
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label>Tipo de Decisão</label>
+            <select class="form-control" [(ngModel)]="consulta.tipoDeDecisao" disabled>
+              <option *ngFor="let item of tiposDecisao; let i = index;" value="{{i + 1}}">{{item}}</option> 
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 mb-2">      
+          <h3>Ementa</h3>    
+          <textarea class="form-control" rows="10" [value]="consulta.ementa" readonly></textarea>
+        </div>
+        <div class="col-xl-4 mb-2">
+          <h3>Consultas revogadas</h3>
+
+          <ul class="list-group" *ngIf="consultasRevogadas?.length > 0">
+            <a class="link list-group-item list-group-item-action text-capitalize animated slideInUp" 
+              *ngFor="let item of consultasRevogadas"
+              (click)="ExibirOutraConsulta(item)">
+              {{item.textoRevogadaPor}}
+            </a>
+          </ul>
+
+          <p *ngIf="!consultasRevogadas || consultasRevogadas.length == 0">Nenhuma consulta revogada no momento.</p>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" (click)="BaixarDocumento()"><i class="fa fa-cloud-download"></i> Baixar o documento</button>
+    </div>
+  </ui-modal>
+</div>
+  

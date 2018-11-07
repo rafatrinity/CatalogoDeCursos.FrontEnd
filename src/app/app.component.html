@@ -1,0 +1,23 @@
+<div class="page-container" [ngClass]="{'fixed-header': headerFixed}">
+    <app-header [ngClass]="{'fixed-top': headerFixed}"></app-header>
+
+    <div class="main-container">
+        <div class="main-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+<!--
+<app-header 
+    [ngClass]="{'header-with-sidebar': !sidebarCollapsed}" 
+    (OnToggleSidebar)="OnToggleSidebar()">
+</app-header>
+
+<div class="main-container" [ngClass]="{'sidebar-collapsed': sidebarCollapsed}">
+    <app-sidebar class="sidebar"></app-sidebar>
+    <div class="main-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+-->

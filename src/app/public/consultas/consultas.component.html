@@ -1,0 +1,158 @@
+<div class="page-title">
+  <h1>Cursos</h1>
+  <div class="alert alert-info" role="alert">
+    <p>Antes de consultar a lista de atividades e se inscrever, verifique se você realmente poderá se dedicar à
+      atividade. Para reduzir a taxa de evasão, a ECG criou algumas regras que determinam o <b><a class="mb-0 link"
+          (click)="popar()">impedimento temporário de inscrição </a></b> em alguns casos. </p>
+  </div>
+</div>
+<div *blockUI="'loading'">
+  <section class="filter-section">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3>Filtros <i class="fa fa-filter"></i></h3>
+      <div class="d-flex align-items-center ml-2">
+        <span class="mr-2">Busca avançada</span>
+        <ui-switch name="buscaAvancada" [(ngModel)]="buscaAvancada" (change)="LimparFiltrosAvancados()"></ui-switch>
+      </div>
+    </div>
+    <hr />
+
+    <form novalidate>
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="form-group">
+            <label>Nome</label>
+            <div class="alert alert-danger" *ngIf="noResult">Curso não encontrado</div>
+            <input [(ngModel)]="selected" [typeahead]="states" (typeaheadNoResults)="typeaheadNoResults($event)" class="form-control">
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-lg-6">
+          <div class="form-group">
+            <input-select label="Metodologia" defaultOption="Selecione" name="Metodologia" [(ngModel)]="Metodologia">
+              <option *ngFor="let item of Metodologia" value="{{item}}">{{item}}</option>
+            </input-select>
+          </div>
+        </div>
+        <!--
+        <div class="col-xl-2 col-lg-4">
+          <div class="form-group">
+            <label>Número</label>
+            <input type="text" class="form-control" name="filtroNumero" [(ngModel)]="filtros.numero" mask='0000' />
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-4">
+          <div class="form-group">
+            <label>Ano de Publicação</label>
+            <input type="text" class="form-control" name="filtroAnoPublicacao" [(ngModel)]="filtros.anoPublicacao" mask='0000' />
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-4">
+          <div class="form-group">
+            <label>Nº Processo</label>
+            <input type="text" class="form-control" name="filtroProcesso" [(ngModel)]="filtros.processo" mask='000000-0/00' />
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div class="form-group">
+            <label>Ementa</label>
+            <input type="text" class="form-control" name="filtroEmenta" [(ngModel)]="filtros.ementa" />
+          </div>
+        </div> -->
+      </div>
+      <div class="row animated fadeInUp faster" *ngIf="buscaAvancada">
+        <div class="col-xl-3 col-lg-6">
+          <div class="form-group">
+            <input-select label="Relator" defaultOption="Selecione" name="relator" [(ngModel)]="filtrosAvancados.relator">
+              <option *ngFor="let item of relatores" value="{{item}}">{{item}}</option>
+            </input-select>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="form-group">
+            <input-select label="Jurisdicionado" defaultOption="Selecione" name="jurisdicionado" [(ngModel)]="filtrosAvancados.jurisdicionado">
+              <option *ngFor="let item of jurisdicionados" value="{{item}}">{{item}}</option>
+            </input-select>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="form-group">
+            <input-select label="Data da Publicação" defaultOption="Selecione" name="dataPublicacao" [(ngModel)]="filtrosAvancados.dataPublicacao">
+              <option *ngFor="let item of datasPublicacao" value="{{item.id}}">{{item.text}}</option>
+            </input-select>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="form-group">
+            <input-select label="Tipo de Decisão" defaultOption="Selecione" name="tipoDecisao" [(ngModel)]="filtrosAvancados.tipoDecisao">
+              <option *ngFor="let item of tiposDecisao; let i = index;" value="{{i + 1}}">{{item}}</option>
+            </input-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" (click)="Filtrar()"><i class="fa fa-search"></i> Buscar</button>
+            <button type="button" class="btn btn-outline-secondary ml-1" (click)="LimparFiltros()"><i class="fa fa-eraser"></i>
+              Limpar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+  <div *ngIf="dadosEmExibicao?.length > 0">
+    <div class="card-custom-deck mb-3" [ngClass]="{'initialized': cardDeckInitialized}">
+      <div class="card fadeInLeft faster" *ngFor="let item of dadosEmExibicao; let i = index;" [ngStyle]="{'animation-delay': (0.05 * i) + 's'}"
+        [ngClass]="{'animated': !animationsInitialized && paginaAtual == 1}">
+        <div class="card-badge-tr text-center" *ngIf="item.publicacao">
+          <i class="fa fa-calendar fa-2x mb-1"></i>
+          <span class="ano font-weight-bold">{{item.publicacao | date:'yyyy'}}</span>
+          <span class="mes font-weight-bold">{{item.publicacao | date:'MMM' | uppercase}}</span>
+          <span class="dia">{{item.publicacao | date:'dd'}}</span>
+        </div>
+        <div class="card-body" [ngClass]="{'with-badge': item.publicacao}">
+          <div class="card-title">
+            <h5 class="mb-0 link" (click)="VerDetalhes(item)">{{item.textoRevogadaPor}}</h5>
+          </div>
+
+          <div class="mb-2" *ngIf="item.revogadaPor > 0">
+            <small class="text-success font-weight-bold">Matriculas abertas <span class="badge badge-success">{{item.revogadaPor}}</span></small>
+          </div>
+
+          <small class="card-text">{{item.ementaReduzida | truncate: 250 }}</small>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex align-items-center justify-content-between">
+            <button class="btn btn-light btn-sm" (click)="inscrever()"><i class="fa fa-check"></i>
+              Inscreva-se</button>
+            <button class="btn btn-light btn-sm" (click)="VerDetalhes(item)"><i class="fa fa-database"></i> Detalhes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <select class="form-control" [(ngModel)]="numeroItensPorPagina" (change)="AlterarNumeroItensPorPagina()">
+          <option value="8">8</option>
+          <option value="16">16</option>
+          <option value="24">24</option>
+          <option value="32">32</option>
+          <option value="40">40</option>
+          <option value="48">48</option>
+          <option value="56">56</option>
+        </select>
+        <span class="flex-shrink-0 ml-2">Cursos por página</span>
+      </div>
+      <pagination #paginator class="paginador mb-3" [(ngModel)]="paginaAtual" [totalItems]="dadosFiltrados.length"
+        [boundaryLinks]="true" [directionLinks]="true" [rotate]="rotate" [itemsPerPage]="numeroItensPorPagina"
+        [maxSize]="5" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="PageChanged($event)">
+      </pagination>
+    </div>
+  </div>
+
+  <p *ngIf="!dadosEmExibicao || dadosEmExibicao.length == 0">Nenhum curso encontrado.</p>
+</div>

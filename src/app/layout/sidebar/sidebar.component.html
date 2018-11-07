@@ -1,0 +1,40 @@
+<div class="sidebar-header">
+  Menu Principal
+</div>
+
+<div class="menu-lateral-container" data-simplebar>
+  <ul class="menu menu-lateral">
+    <li class="menu-item" *ngFor="let item of items;">
+      <a class="menu-link" routerLink="{{item.router}}" *ngIf="item.router" routerLinkActive="active">
+        <i class="{{item.icon}}"></i>
+        <span>{{item.title}}</span>
+      </a>
+      <span class="menu-link" *ngIf="!item.router" >
+        <i class="{{item.icon}}"></i>
+        <span>{{item.title}}</span>
+        <i class="fa fa-angle-down ml-auto" *ngIf="item.items?.length > 0"></i>
+      </span>
+      <ul class="submenu" *ngIf="item.items?.length > 0" style="display: none;">
+        <li class="menu-item" *ngFor="let subitem of item.items;">
+          <a class="menu-link" routerLink="{{subitem.router}}" *ngIf="subitem.router" routerLinkActive="active">
+            <i class="{{subitem.icon}}"></i>
+            <span>{{subitem.title}}</span>
+          </a>
+          <span class="menu-link" *ngIf="!subitem.router" >
+            <i class="{{subitem.icon}}"></i>
+            <span>{{subitem.title}}</span>
+            <i class="fa fa-angle-down ml-auto" *ngIf="subitem.items?.length > 0"></i>
+          </span>
+          <ul class="submenu" *ngIf="subitem.items?.length > 0" style="display: none;">
+            <li class="menu-item" *ngFor="let subitemNivel3 of subitem.items;">
+              <a class="menu-link" routerLink="{{subitemNivel3.router}}" routerLinkActive="active">
+                <i class="{{subitemNivel3.icon}}"></i>
+                <span>{{subitemNivel3.title}}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
