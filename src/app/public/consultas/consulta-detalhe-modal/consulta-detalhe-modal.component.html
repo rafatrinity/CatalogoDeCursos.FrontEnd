@@ -1,75 +1,115 @@
 <div *blockUI="'loadingModal'">
-  <ui-modal modalTitle="Histórico da Consulta Nº {{consulta.numero}}">
-    <div class="body">
-      <div class="alert alert-danger" role="alert" *ngIf="consulta.revogadaPor > 0">
-        Revogada pela Consulta Nº <span class="badge badge-danger">{{consulta.revogadaPor}}</span>
-      </div>
+    <ui-modal modalTitle="Curso: {{ curso.nome }}">
 
-      <div class="row">
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label>Número da Consulta</label>
-            <input type="text" class="form-control" [value]="consulta.numero" readonly />
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label>Data da Publicação</label>
-            <input type="text" class="form-control" value="{{consulta.publicacao | date:'dd/MM/yyyy'}}" readonly />
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <label>Número do Processo</label><br/>
-            <a href="http://consulta.tce.rj.gov.br/consulta-processo/Processo/List?numeroProcesso={{consulta.numeroDoProcessoConsulta}}" target="_blank">{{consulta.numeroDoProcessoFormatado}} <i class="fa fa-external-link"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="form-group">
-            <label>Relator</label>
-            <input type="text" class="form-control" [value]="consulta.relator" readonly />
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="form-group">
-            <label>Jurisdicionado</label>
-            <input type="text" class="form-control" [value]="consulta.jurisdicionado" readonly />
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="form-group">
-            <label>Tipo de Decisão</label>
-            <select class="form-control" [(ngModel)]="consulta.tipoDeDecisao" disabled>
-              <option *ngFor="let item of tiposDecisao; let i = index;" value="{{i + 1}}">{{item}}</option> 
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-8 mb-2">      
-          <h3>Ementa</h3>    
-          <textarea class="form-control" rows="10" [value]="consulta.ementa" readonly></textarea>
-        </div>
-        <div class="col-xl-4 mb-2">
-          <h3>Consultas revogadas</h3>
+        <div class="body" *ngFor="let turma of curso.turmas">
+            <div *ngIf="turma != null && turma != undefined">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="alert alert-success" role="alert">
+                            <div *ngIf="turma.inscAberta == true">
+                                Inscrição aberta <span class="badge badge-success">{{turma.maxAluno}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-          <ul class="list-group" *ngIf="consultasRevogadas?.length > 0">
-            <a class="link list-group-item list-group-item-action text-capitalize animated slideInUp" 
-              *ngFor="let item of consultasRevogadas"
-              (click)="ExibirOutraConsulta(item)">
-              {{item.textoRevogadaPor}}
-            </a>
-          </ul>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <i class="fa fa-graduation-cap fa-fw"></i>
+                            <label>Vagas</label>
+                            <input type="text" class="form-control" [value]="turma.maxAluno" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <i class="fa fa-user-o fa-fw"></i>
+                            <label>Professor</label>
+                            <input type="text" class="form-control" [value]="turma.professor.nome" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <i class="fa fa-file-text-o fa-fw"></i>
+                            <label>Eixo Temático</label>
+                            <input type="text" class="form-control" [value]="turma.professor.nome" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <i class="fa fa-file-text-o fa-fw"></i>
+                            <label>Metodologia</label>
+                            <input type="text" class="form-control" [value]="turma.professor.nome" readonly />
+                        </div>
+                    </div>
+                    <!--<div class="col-lg-3">
+                        <div class="form-group">
+                            <a href="http://consulta.tce.rj.gov.br/consulta-processo/Processo/List?numeroProcesso={{turma.id}}"
+                                target="_blank">{{turma.id}} <i class="fa fa-external-link"></i></a>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <i class="fa fa-calendar fa-fw"></i>
+                            <label>Data Inicio</label>
+                            <input type="text" class="form-control" value="{{ turma.inicioAulas | date:'dd/MM/yyyy'}}"
+                                readonly />
+                        </div>
+                    </div>
 
-          <p *ngIf="!consultasRevogadas || consultasRevogadas.length == 0">Nenhuma consulta revogada no momento.</p>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <i class="fa fa-calendar fa-fw"></i>
+                            <label>Data Fim</label>
+                            <input type="text" class="form-control" value="{{ turma.fimAulas | date:'dd/MM/yyyy'}}"
+                                readonly />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-8 mb-2">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="Desc-tab" data-toggle="tab" href="#Desc" role="tab"
+                                aria-controls="Desc" aria-selected="false">Descrição</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Objetivo-tab" data-toggle="tab" href="#Objetivo" role="tab"
+                                aria-controls="Objetivo" aria-selected="true">Objetivo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Ementa-tab" data-toggle="tab" href="#Ementa" role="tab"
+                                aria-controls="Ementa" aria-selected="false">Ementa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Obs-tab" data-toggle="tab" href="#Obs" role="tab" aria-controls="Obs"
+                                aria-selected="false">Observações</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="Desc" role="tabpanel" aria-labelledby="Desc-tab">{{curso.descricao}}</div>
+                        <div class="tab-pane fade" id="Objetivo" role="tabpanel" aria-labelledby="Objetivo-tab">{{curso.objetivo}}</div>
+                        <div class="tab-pane fade" id="Ementa" role="tabpanel" aria-labelledby="Ementa-tab">{{curso.ementa}}</div>
+                        <div class="tab-pane fade" id="Obs" role="tabpanel" aria-labelledby="Obs-tab">{{curso.observacoes}}</div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-4 mb-2">
+                    <img class="irc_mi" src="https://static.thenounproject.com/png/538846-200.png" onload="typeof google==='object'"
+                        width="220" height="auto" style="margin-left: 20%; margin-top: 1%; margin-right: 0px;" alt="Resultado de imagem para profile icon png"
+                        popover="Mais detalhes sobre este professor em breve." popoverTitle="{{turma.professor.nome}}"
+                        triggers="mouseenter:mouseleave">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="actions">
-      <button class="btn btn-primary" (click)="BaixarDocumento()"><i class="fa fa-cloud-download"></i> Baixar o documento</button>
-    </div>
-  </ui-modal>
+        <div class="actions" *ngIf="turma != null && turma != undefined">
+            <button class="btn btn-primary" (click)="inscrever(curso.turmas[0].link)"><i class="fa fa-check"></i>Inscreva-se</button>
+        </div>
+
+</ui-modal>
 </div>
-  

@@ -32,7 +32,7 @@ export class AlertService {
     return this.alert({ 
       type: 'question', 
       title: title || 'TCE-RJ',
-      text: text,
+      html: text,
       showCancelButton: true,
       confirmButtonText: 'Sim',
       cancelButtonText: 'Não' 
@@ -42,28 +42,28 @@ export class AlertService {
     return this.alert({ 
       type: 'success', 
       title: title || 'TCE-RJ',
-      text: text 
+      html: text 
     });
   }
   error(title: string, text: string) {
     return this.alert({ 
       type: 'error', 
       title: title || 'TCE-RJ',
-      text: text 
+      html: text 
     });
   }
   warning(title: string, text: string) {
     return this.alert({ 
       type: 'warning', 
       title: title || 'TCE-RJ',
-      text: text 
+      html: text 
     });
   }
   info(title: string, text: string) {
     return this.alert({ 
       type: 'info', 
       title: title || 'TCE-RJ',
-      text: text 
+      html: text 
     });
   }  
 

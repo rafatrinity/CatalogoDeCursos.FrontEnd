@@ -1,10 +1,10 @@
 .app-loading {
-  .logo {
-    width: 120px;
-    height: 40px;
-    
-    // this way asset gets processed by webpack 
-    background: url("./assets/img/logoTceWhite.png") center center no-repeat;
-    background-size: cover;
-  }
+.logo {
+width: 120px;
+height: 120px;
+
+// this way asset gets processed by webpack 
+background: url("./assets/img/cap.ico") center center no-repeat;
+background-size: cover;
+}
 }

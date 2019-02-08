@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  // webApiBaseUrl: 'http://localhost:50945/api/',
+  webApiBaseUrl: 'http://localhost:64538/api/'
+  /*
   webApiBaseUrl: 'http://desenvolvimentodotcore.tce.rj.gov.br/cadastro-publicacoes-webapi/api/',
   servicoImagensApiBaseUrl: 'http://desenvolvimento.tce.rj.gov.br/servico-imagem-servidor/api/',
   scapApiBaseUrl: 'http://desenvolvimentodotcore.tce.rj.gov.br/scap-webapi/api/',
@@ -15,4 +16,5 @@ export const environment = {
   grupoAdAdminSumulas: 'TCERJ\\GrupoGerenciarCadastroSumulasJurisprudencia',
   grupoAdAdminContratos: 'TCERJ\\GrupoGerenciarContratos',
   grupoAdAdminResolucoes: 'TCERJ\\GrupoGerenciarConsultaDeliberacoes',
+  */
 };

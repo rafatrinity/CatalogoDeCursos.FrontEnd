@@ -12,7 +12,10 @@ import localePt from '@angular/common/locales/pt';
 import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
-
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap';
 
 registerLocaleData(localePt);
 
@@ -25,10 +28,15 @@ registerLocaleData(localePt);
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     LayoutModule,
     CommonModule,
     AppRoutingModule,
     CoreModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule.forRoot(),
+    TabsModule.forRoot(),
     SharedModule.forRoot(),
   ],
   providers: [
